@@ -33,3 +33,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class Event(models.Model):
+    author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+
+

@@ -40,11 +40,17 @@ class Event(models.Model):
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return self.title
+
 class Task(models.Model):
     event = models.ForeignKey('blog.Event', related_name='tasks')
     title = models.CharField(max_length=200)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
 
 
 

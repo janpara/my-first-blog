@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^comment/(?P<pk>[0-9]+)/approve/$', views.comment_approve, name='comment_approve'),
     url(r'^comment/(?P<pk>[0-9]+)/remove/$', views.comment_remove, name='comment_remove'),
     url(r'^events/$', views.event_list),
+    url(r'^events/new/$', views.event_new, name='event_new'),
+    url(r'^events/(?P<pk>[0-9]+)/$', views.event_detail),
 ]
 

@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+
+    {% block content %}
+        <div class="post">
+
+                <div class="date">
+                    {{ event.created_date }}
+                 
+                </div>
+
+
+            <h1>{{ event.title }}</h1>
+            <p>{{ event.text|linebreaks }}</p>
+        </div>
+        <hr>
+
+		{% for task in event.tasks.all %}
+
+                         <div class="comment">
+                             <div class="date">
+                                  {{ task.created_date }}
+
+                             </div>
+                             <strong>{{ task.author }}</strong>
+                             <p>{{ task.description|linebreaks }}</p>
+                             {% if task.status = 'S' %}
+                                <p style="color: red">{{ task.get_status_display }}</p>
+                             {% else %}
+                                <p style="color: blue">{{ task.get_status_display }}</p>
+                             {% endif %}
+                             <p>Presupuesto :{{ task.budget }}</p>
+                        </div>
+
+		{% empty %}
+		    <p>No tasks here yet :(</p>
+		{% endfor %}
+    {% endblock %}

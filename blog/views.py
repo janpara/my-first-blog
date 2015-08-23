@@ -86,3 +86,18 @@ def event_list(request):
     events = Event.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
     return render(request, 'blog/event_list.html', {'events': events})
 
+def event_new(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.author = request.user
+            event.save()
+            return redirect('blog.views.event_detail', pk=event.pk)
+    else:
+        form = EventForm()
+    return render(request, 'blog/event_edit.html', {'form': form})
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'blog/event_detail.html', {'event': event})

@@ -47,6 +47,9 @@ class Event(models.Model):
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
 
+    def pending_tasks(self):
+        return self.tasks.filter(status='S')
+
     def __str__(self):
         return self.title
 

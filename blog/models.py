@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+# Los diferentes estados de una tarea
 STATUS = (
     ('S', 'Sin asignar'),
     ('P','Pendiente'),
@@ -54,7 +55,8 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=1, choices=STATUS)
+    status = models.CharField(max_length=1, choices=STATUS, default='S')
+    budget = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.title

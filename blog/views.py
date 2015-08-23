@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Comment, Event
+from .forms import PostForm, CommentForm, EventForm
 from django.contrib.auth.decorators import login_required
 
 def post_list(request):
@@ -81,4 +81,8 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('blog.views.post_detail', pk=post_pk)
+
+def event_list(request):
+    events = Event.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    return render(request, 'blog/event_list.html', {'events': events})
 

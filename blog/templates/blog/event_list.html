@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+    {% block content %}
+        {% for event in events %}
+            <div class="post">
+                <div class="date">
+                    {{ event.created_date }}
+
+                </div>
+                <h1>{{ event.title }}</h1>
+                <p>{{ event.description|linebreaks }}</p>
+
+            </div>
+        {% endfor %}
+    {% endblock content %}

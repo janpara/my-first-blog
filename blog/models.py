@@ -1,6 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
+STATUS = (
+    ('S', 'Sin asignar'),
+    ('P','Pendiente'),
+    ('R', 'Realizada')
+)
+
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)  
@@ -48,6 +54,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=1, choices=STATUS)
 
     def __str__(self):
         return self.title

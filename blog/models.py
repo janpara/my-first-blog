@@ -60,9 +60,36 @@ class Task(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=1, choices=STATUS, default='S')
     budget = models.FloatField(default=0.0)
+    owner = models.ForeignKey('blog.Parent', related_name='parentasks', null=True, blank=True)
+
 
     def __str__(self):
         return self.title
+
+class Pupil(models.Model):
+    GENDER = (
+        ('M','Masculino'),
+        ('F', 'Femenino')
+        )
+    name = models.CharField(max_length=40)
+    birthday = models.DateField()
+    gender = models.CharField(max_length=1, choices=GENDER, default='M')
+
+    def __str__(self):
+        return self.name
+
+class Parent(models.Model):
+
+    name = models.CharField(max_length=40)
+    pupil = models.ForeignKey('blog.Pupil', related_name='parents')
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
 
 
 

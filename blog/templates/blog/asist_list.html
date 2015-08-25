@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+    {% block content %}
+        {% for asist in asists %}
+            <div class="post">
+                <div class="date">
+                    {{ asist.event }}
+
+                </div>
+
+                <p>{{ asist.pupil|linebreaks }}</p>
+                <p>Acompañantes {{asist.childnumber }}</p>
+                <p>Total {{ total }}</p>
+            </div>
+        {% endfor %}
+    {% endblock content %}

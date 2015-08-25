@@ -34,4 +34,35 @@
 		{% empty %}
 		    <p>No tasks here yet :(</p>
 		{% endfor %}
+
+        <h3>ORGANIZAN</h3>
+        {% for organizer in organizers %}
+
+
+                         <div class="comment">
+
+                                  {{ organizer.name }}
+
+
+
+                        </div>
+		{% empty %}
+		    <p>No organizers here yet :(</p>
+		{% endfor %}
+
+        <h3>ASISTEN</h3>
+        {% for assistant in assistants %}
+
+
+                         <div class="comment">
+
+                                  {{ assistant.name }}
+
+
+
+                        </div>
+		{% empty %}
+		    <p>No assistants here yet :(</p>
+		{% endfor %}
+
     {% endblock %}

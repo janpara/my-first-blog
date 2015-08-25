@@ -74,6 +74,7 @@ class Pupil(models.Model):
     name = models.CharField(max_length=40)
     birthday = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
+    eventsassisted = models.ManyToManyField('blog.Event',related_name='pupilassists', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -82,9 +83,16 @@ class Parent(models.Model):
 
     name = models.CharField(max_length=40)
     pupil = models.ForeignKey('blog.Pupil', related_name='parents')
+    eventsorganized = models.ManyToManyField('blog.Event',related_name='parentorganizes', null=True, blank=True)
+    eventsassisted = models.ManyToManyField('blog.Event',related_name='parentassists', null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+
+
+
+
 
 
 

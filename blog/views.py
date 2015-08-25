@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment, Event
+from .models import Post, Comment, Event, Parent, Pupil, Task
 from .forms import PostForm, CommentForm, EventForm
 from django.contrib.auth.decorators import login_required
 
@@ -100,4 +100,9 @@ def event_new(request):
 
 def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
-    return render(request, 'blog/event_detail.html', {'event': event})
+    organizers = event.parentorganizes.all()
+    assistants = event.pupilassists.all()
+
+    return render(request, 'blog/event_detail.html', {'event': event, 'organizers': organizers, 'assistants':assistants})
+
+

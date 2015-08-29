@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment, Event, Parent, Pupil, Task
+from .models import Post, Comment, Event, Parent, Pupil, Task, Curso
 from .forms import PostForm, CommentForm, EventForm
 from django.contrib.auth.decorators import login_required
 
@@ -82,10 +82,19 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('blog.views.post_detail', pk=post_pk)
 
+@login_required
 def event_list(request):
-    events = Event.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    childs = Pupil.objects.filter(parents__user=request.user)
+    events = []
+    for child in childs:
+        curso = Curso.objects.filter(pupilstudies=child)
+        eventsOfCurso = Event.objects.filter(curso=curso)
+        events.extend(eventsOfCurso)
+    #events = Event.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    print(events)
     return render(request, 'blog/event_list.html', {'events': events})
 
+@login_required
 def event_new(request):
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -98,6 +107,7 @@ def event_new(request):
         form = EventForm()
     return render(request, 'blog/event_edit.html', {'form': form})
 
+@login_required
 def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     organizers = event.parentorganizes.all()

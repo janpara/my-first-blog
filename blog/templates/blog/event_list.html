@@ -8,7 +8,7 @@
                 </div>
                 <h1>{{ event.title }}</h1>
                 <p>{{ event.description|linebreaks }}</p>
-                <a href="{% url "blog.views.event_detail" pk=event.pk %}">Tareas sin asignar: {{ event.pending_tasks.count }}</a>
+                <a href="{% url 'blog.views.event_detail' pk=event.pk %}">Tareas sin asignar: {{ event.pending_tasks.count }}</a>
 
             </div>
         {% endfor %}

@@ -10,7 +10,9 @@
 
 
             <h1>{{ event.title }}</h1>
-            <p>{{ event.text|linebreaks }}</p>
+            <p>{{ event.description|linebreaks }}</p>
+            <p>{{ event.where|linebreaks }}</p>
+            <p>{{ event.when|linebreaks }}</p>
         </div>
         <hr>
 

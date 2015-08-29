@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Los diferentes estados de una tarea
 STATUS = (
@@ -46,12 +47,16 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    curso = models.ForeignKey('blog.Curso',related_name='eventcurso', null=True,blank=True )
+    when = models.DateTimeField(null=True)
+    where = models.CharField(max_length=2000, null=True)
 
     def pending_tasks(self):
         return self.tasks.filter(status='S')
 
     def __str__(self):
         return self.title
+
 
 class Task(models.Model):
     event = models.ForeignKey('blog.Event', related_name='tasks')
@@ -62,9 +67,9 @@ class Task(models.Model):
     budget = models.FloatField(default=0.0)
     owner = models.ForeignKey('blog.Parent', related_name='parentasks', null=True, blank=True)
 
-
     def __str__(self):
         return self.title
+
 
 class Pupil(models.Model):
     GENDER = (
@@ -75,20 +80,30 @@ class Pupil(models.Model):
     birthday = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
     eventsassisted = models.ManyToManyField('blog.Event',related_name='pupilassists', null=True, blank=True)
+    curso = models.ForeignKey('blog.Curso',related_name='pupilstudies', null=True,blank=True )
 
     def __str__(self):
         return self.name
 
-class Parent(models.Model):
 
+class Parent(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
-    pupil = models.ForeignKey('blog.Pupil', related_name='parents')
+    pupil = models.ManyToManyField('blog.Pupil', related_name='parents', null=True)
     eventsorganized = models.ManyToManyField('blog.Event',related_name='parentorganizes', null=True, blank=True)
     eventsassisted = models.ManyToManyField('blog.Event',related_name='parentassists', null=True, blank=True)
 
     def __str__(self):
         return self.name
 
+
+class Curso(models.Model):
+
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 
 
